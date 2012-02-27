@@ -28,7 +28,6 @@ Insp {
 	gui { arg inspView;
 		{
 			box = inspView.flow({ arg box;
-				// what's the calling method ?
 				notes.do({ arg ag;
 					if(ag.isString or: {ag.isKindOf(Symbol)},{
 						SimpleLabel(box,ag.asString)
@@ -42,9 +41,8 @@ Insp {
 				},{
 					ObjectInsp(subject).gui(box);
 				});
-			}/*,Rect(180,0,775,900)*/);
+			},inspView.bounds.moveTo(0,0));
 			box.visible = hidden.not;
-
 			nil
 		}.defer
 	}
@@ -77,15 +75,13 @@ InspManager {
 	}
 	watch { arg insp;
 		if(insp.isNil,{
-			//"Insp was nil, asked to watch".error;
-			//this.dump;
 			^this
 		});			
 		insps = insps.add(insp);
 		if(menu.isNil, {
 			menu = \pleaseWait;
 			{
-				var h,fb,f,w,val;
+				var h,fb,f,w,val,space;
 				window = f = GUI.window.new("::inspect::",Rect(440,500,1100,900));
 				f.view.background = Color.white;
 				h = f.bounds.height - 50;
@@ -97,7 +93,12 @@ InspManager {
 				menu.action = { val = insps.at(menu.value); };
 				menu.mouseUpAction = { this.showInsp(insps.at(menu.value)); };
 				menu.enterKeyAction = { this.showInsp(val); }; 
-				inspView = GUI.compositeView.new(f, Rect(203,0,w - 205,h));
+				if(GUI.scheme.id == \cocoa,{
+					space = 2;
+				},{
+					space = 4;
+				});
+				inspView = GUI.compositeView.new(f, Rect(203,0,w - 203 - space,h));
 				inspView.background = Color(0.17,0.1,0.1,0.15);
 				this.showInsp(insp);
 
