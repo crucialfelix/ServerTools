@@ -44,6 +44,21 @@ InspButton : SimpleButton {
 			.color_(Color.new255(70, 130, 200))
 			.background_(Color.white)
 	}
+	*big { arg  target,layout,minWidth=200;
+		^super.prNew(layout,target.asString,minWidth,GUI.font.new("Helvetica-Bold",18))
+			.action_({target.insp; InspManager.front; })
+			.color_(Color.black)
+			.background_(Color.white)
+	}
+	*icon { arg target,layout;
+		^GUI.button.new(layout,Rect(0,0,30,GUI.skin.buttonHeight))
+			.action_({ target.insp; InspManager.front })
+			.states_([["insp",Color.black,Color.white]]);
+	}
+	*captioned { arg caption,target,layout,minWidth=150;
+		SimpleLabel(layout,caption,minWidth:minWidth);
+		this.new(target,layout);
+	}
 }
 
 
