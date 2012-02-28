@@ -75,7 +75,7 @@ ServerLogGui : ObjectGui {
 		var slg;
 		slg = ServerLogGui.new(\fakeModel);
 		
-		Sheet({ |r|
+		PageLayout.new.flow({ arg r;
 			[mb.preparationMessages,mb.messages].do({ |msgs|
 				if(msgs.size == 1,{
 					slg.formatMsg(r,msgs[0]);
@@ -89,7 +89,7 @@ ServerLogGui : ObjectGui {
 					})
 				});
 			})
-		})
+		}).resizeToFit
 	}
 	formatMsg { |r,msg|
 		var cmd,selector;
