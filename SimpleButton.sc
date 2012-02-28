@@ -37,6 +37,9 @@ SimpleLabel : SCViewHolder {
 	bold { arg fontSize=11;
 		this.font = GUI.font.new("Helvetica-Bold",fontSize);
 	}
+	color_ { arg color;
+		view.stringColor = color
+	}
 }
 
 

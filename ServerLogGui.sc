@@ -178,9 +178,9 @@ ServerLogGui : ObjectGui {
 			def = InstrSynthDef.cacheAt(defName,model.server);
 		});
 		if(def.notNil,{
-			InspButton(def,r).background_(c).labelColor_(Color.black);
+			InspButton(def,r).background_(c).color_(Color.black);
 		},{
-			defName.gui(r).background_(c);
+			SimpleLabel(r,defName.asString).background_(c).color_(Color.black)
 		});
 		^def
 	}
