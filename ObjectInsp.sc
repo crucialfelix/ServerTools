@@ -250,23 +250,31 @@ ClassGui : ObjectInsp {
 				//		this.displayMethodsOf(model);
 				//	},minWidth:width)
 				//});
-				SimpleButton(layout,"find method...",{
-					Sheet.getString("find method...","",{ arg string;
-						var class,method;
-						string = string.asSymbol;
-						class = model;
-						while({ class != Meta_Object },{
-							method = class.findMethod(string);
-							if(method.notNil,{
-								method.gui;
-								class = Meta_Object
-							 },{
-							 	class = class.superclass;
-							 });
-						});
-					})
-				});
 
+				SimpleButton(layout,"vertical find method...",{
+					var w,b,callback = { arg string;
+						var found;
+						string = string.asSymbol;
+						found = ([model] ++ model.superclasses).any({ arg class;
+									var method;
+									method = class.findMethod(string);
+									if(method.notNil,{
+										method.gui;
+										true
+									 },{
+										false	 
+									 });
+								});
+						if(found.not,{
+							// needs a gui report in the dialog
+							("Method not found:" + string).inform;						});
+					};
+					w = PageLayout("method?",Rect(200,200,170,40),scroll:false);
+					b = 	TextField(w,Rect(5,5,150,30));
+					b.string = "";
+					b.action = { arg field; callback.value(field.value); w.close; };
+					{ b.focus }.defer;
+				});
 				this.dependantsGui(layout);
 
 				SimpleLabel(layout.startRow,"subclasses:",layoutWidth).bold;
