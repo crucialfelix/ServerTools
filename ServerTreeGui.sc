@@ -98,39 +98,43 @@ BussesTool {
 		var resize = false;
 		if(layout.isNil,{ layout = FlowView.new; resize=true });
 		SimpleLabel( layout, "Audio Busses",685);
-		server.audioBusAllocator.blocks.do({ |b|
-			var listen,bus;
-			listen = Patch({ In.ar( b.start, b.size ) });
-			layout.startRow;
-			ToggleButton( layout,"listen",{
-				listen.play
-			},{
-				listen.stop
-			});
-			SimpleLabel( layout, b.start.asString + "(" ++ b.size.asString ++ ")",100 );
-
-			Annotations.guiFindBus(b.start,b.size,layout);
-
-			if(BusPool.notNil,{
-				bus = BusPool.findBus(server,b.start);
-				if(bus.notNil,{
-					layout.flow({ |f|
-						var ann;
-						ann = BusPool.getAnnotations(bus);
-
-						if(ann.notNil,{
-							ann.keysValuesDo({ |client,name|
-								f.startRow;
-								InspButton(client,f);
-								SimpleLabel(f,":"++name);
+		if(\Patch.asClass.notNil,{
+			server.audioBusAllocator.blocks.do({ |b|
+				var listen,bus;
+				listen = Patch({ In.ar( b.start, b.size ) });
+				layout.startRow;
+				ToggleButton( layout,"listen",{
+					listen.play
+				},{
+					listen.stop
+				});
+				SimpleLabel( layout, b.start.asString + "(" ++ b.size.asString ++ ")",100 );
+	
+				Annotations.guiFindBus(b.start,b.size,layout);
+	
+				if(BusPool.notNil,{
+					bus = BusPool.findBus(server,b.start);
+					if(bus.notNil,{
+						layout.flow({ |f|
+							var ann;
+							ann = BusPool.getAnnotations(bus);
+	
+							if(ann.notNil,{
+								ann.keysValuesDo({ |client,name|
+									f.startRow;
+									InspButton(client,f);
+									SimpleLabel(f,":"++name);
+								});
 							});
-						});
-					})
+						})
+					});
+				});
+				SimpleButton(layout,"search ServerLog",{
+					ServerLog.guiMsgsForBus(b.start,b.size)
 				});
 			});
-			SimpleButton(layout,"search ServerLog",{
-				ServerLog.guiMsgsForBus(b.start,b.size)
-			});
+		},{
+			"BussesTool requires cruciallib for now".inform;
 		});
 		if(resize,{ layout.resizeToFit })
 	}
