@@ -1,6 +1,6 @@
 
 
-ServerQueryTreeGui : ObjectGui { // model is Server
+ServerTreeGui : ObjectGui { // model is Server
 	
 	*makeWindow { arg server;
 		var gui;
