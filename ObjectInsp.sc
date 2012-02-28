@@ -128,7 +128,7 @@ ObjectInsp : ObjectGui {
 				SimpleLabel(layout,cn.defaultValue);
 			};
 			layout.startRow;
-			if(InstrSynthDef.notNil and: {def.isKindOf(InstrSynthDef)},{
+			if(\InstrSynthDef.asClass.notNil and: {def.isKindOf(InstrSynthDef)},{
 				InspButton(def.instrName.asInstr ? def.instrName,layout);
 			});
 			if(def.name.notNil,{
@@ -178,7 +178,7 @@ ClassGui : ObjectInsp {
 					width = layoutWidth / (model.superclasses.size + 1);
 				},{
 					width = layoutWidth;
-				});			
+				});
 				SimpleLabel(layout,model.asString,[width,30],font:Font("Helvetica-Bold",18));
 				layout.startRow;
 				SimpleButton(layout, "Source code",{
