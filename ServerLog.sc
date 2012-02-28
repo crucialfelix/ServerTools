@@ -76,7 +76,7 @@ ServerLog : NetAddr {
 	slinit { arg s;
 		server = s;
 		server.addr = this;
-		thisProcess.recvOSCfunc = { arg time,replyAddr,msg;
+		thisProcess.addOSCRecvFunc({ arg msg,time,replyAddr,recvPort;
 			var status;
 			if(msg[0] == '/status.reply') {
 				status = msg[0..5];
@@ -87,7 +87,7 @@ ServerLog : NetAddr {
 			} {
 				msgs = msgs.add( ServerLogReceivedEvent(time,msg) )
 			}
-		};
+		});
 	}
 	sendMsg { arg ... args;
 		if(args != ["/status"],{
