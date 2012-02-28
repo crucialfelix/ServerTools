@@ -8,19 +8,19 @@
 
 + Class {
 
-	classesReferenced {
+	referencesClasses {
 		var package = this.package;
 		var refklasses = IdentitySet.new;
 		(this.class.methods ++ this.methods).do { arg meth;
 			if(meth.package == package,{
-				refklasses.addAll(meth.classesReferenced)
+				refklasses.addAll(meth.referencesClasses)
 			})
 		};
 		^refklasses
 	}
 	referencesTo { // slow !
 		^Class.allClasses.select({ arg class;
-			class.classesReferenced.includes(this)
+			class.referencesClasses.includes(this)
 		})
 	}
 }
@@ -28,7 +28,7 @@
 
 + Method {
 
-	classesReferenced {
+	referencesClasses {
 		var selectors,refklasses;
 		refklasses = [];
 		selectors = this.selectors;
@@ -50,7 +50,7 @@
 
 
 + Quark {
-	
+
 	referencesPackages {
 		^Quark.referencesPackages(this.name)
 	}
@@ -59,10 +59,10 @@
 		q = Quark.find(quarkName.asString);
 		all = IdentitySet.new;
 		q.definesClasses.do { arg cl;
-			all.addAll( cl.classesReferenced )
+			all.addAll( cl.referencesClasses )
 		};
 		q.definesExtensionMethods.do { arg m;
-			all.addAll( m.classesReferenced )
+			all.addAll( m.referencesClasses )
 		};
 		p = all.collect(_.package).as(IdentitySet);
 		p.remove(quarkName.asSymbol);

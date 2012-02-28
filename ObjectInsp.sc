@@ -283,7 +283,7 @@ ClassGui : ObjectInsp {
 
 				SimpleLabel(layout.startRow,"classes referenced by" + model ++ ":",layoutWidth).bold;
 				layout.startRow;
-				model.classesReferenced.do { arg klass;
+				model.referencesClasses.do { arg klass;
 					ClassNameLabel(klass,layout.startRow)
 				};
 
@@ -408,7 +408,7 @@ MethodGui : ObjectGui {
 
 		SimpleLabel(layout.startRow,"classes referenced:",300).bold;
 		layout.startRow;
-		model.classesReferenced.do { arg klass;
+		model.referencesClasses.do { arg klass;
 			ClassNameLabel(klass,layout.startRow)
 		};
 	}
