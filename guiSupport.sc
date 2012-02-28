@@ -68,5 +68,28 @@
 		p.remove(quarkName.asSymbol);
 		^p.as(Array)
 	}
+	packageRoot {
+		^Quarks.local.path +/+ this.path
+	}
+	*makeHelpDocs { arg quarkName;
+		/*
+			save template docs for all classes that don't have docs yet.
+			HelpSource/Classes must exist
+			does not overwrite existing
+			protip: finish writing your classes first
+		*/
+		var q;
+		q = Quark.find(quarkName.asString);
+		q.definesClasses.do { arg klass;
+			var path;
+			path = q.packageRoot +/+ "HelpSource" +/+ "Classes" +/+ (klass.name.asString ++ ".schelp");
+			if(File.exists(path).not,{
+				SCDoc.makeClassTemplate(klass.name).write(path);
+				path.debug("created")
+			},{
+				path.debug("exists")
+			});
+		};
+	}
 }
 
