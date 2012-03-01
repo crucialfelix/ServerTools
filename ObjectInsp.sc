@@ -103,7 +103,7 @@ ObjectInsp : ObjectGui {
 			layout.startRow;
 			model.keysValuesDo({ arg k,v;
 				layout.startRow;
-				SimpleLabel(layout,k.asString,v);
+				SimpleLabel(layout,k.asString);
 				InspButton(v,layout);
 			});
 		});
