@@ -58,9 +58,14 @@ ObjectInsp : ObjectGui {
 		iNames = model.class.instVarNames;
 		if(iNames.notNil,{
 			iNames.do({arg v,i;
-				var iv;
+				var iv,str;
 				iv=model.instVarAt(i);
-				listItems.add( v.asString.as(Array).extend(25,$ ).as(String) ++ "=  " + iv);
+				{
+	    			str = v.asString;
+				}.try({ arg err;
+					str = "ERROR: during asString " + v.class.name;
+	    		});
+				listItems.add( str.as(Array).extend(25,$ ).as(String) ++ "=  " + iv);
 				actions.add({ iv.insp(model,v) });
 			});
 		});
