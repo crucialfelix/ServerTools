@@ -1,8 +1,6 @@
 
 + Server {
 
-	guiClass { ^ServerGui }
-	
 	async { arg msg, replyCmd, callback, timeout=3;
 
 		var resp,done=false;
@@ -23,7 +21,7 @@
 			if(done.not) {
 				("Server failed to respond to " + msg + "with" + replyCmd).warn;
 			}
-		}.defer(timeout)	
+		}.defer(timeout)
 	}
 	
 	getQueryTree { arg callback;
