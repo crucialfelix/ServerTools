@@ -26,10 +26,17 @@ code::
 returns:: a dictionary
 
 method:: async
+
 argument:: msg
 The OSC message to send to the server
+
 argument:: replyCmd
 The OSC message that the server will reply with.
-callback:: a callback function that will be executed with the successful response
-timeout:: the maximum time to wait before giving up and posting a warning
 
+argument:: callback
+a callback function that will be executed with the successful response
+
+argument:: timeout
+The maximum time to wait before giving up and posting a warning
+
+returns:: the callback is executed asynchronously
