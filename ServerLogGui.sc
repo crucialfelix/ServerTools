@@ -128,7 +128,7 @@ ServerLogGui : ObjectGui {
 		*/
 	}
 	colorForCmd { |cmd|
-		^cmd.switch(
+		^cmd.asString.switch(
 			"/n_free",{ Color.red},
 			"/g_freeAll",{Color.red},
 			"/g_deepFree",{Color.red},
@@ -150,7 +150,8 @@ ServerLogGui : ObjectGui {
 			"/n_after",{Color.green},
 			"/g_new",{Color.green},
 			"/g_head",{Color.green},
-			"/g_tail",{Color.green}
+			"/g_tail",{Color.green},
+			Color.white
 		)
 	}
 	addAction { |num|
