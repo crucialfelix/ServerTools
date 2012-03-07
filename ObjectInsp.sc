@@ -267,12 +267,13 @@ ClassGui : ObjectInsp {
 										method.gui;
 										true
 									 },{
-										false	 
+										false
 									 });
 								});
 						if(found.not,{
 							// needs a gui report in the dialog
-							("Method not found:" + string).inform;						});
+							("Method not found:" + string).inform;
+						});
 					};
 					w = PageLayout("method?",Rect(200,200,170,40),scroll:false);
 					b = 	TextField(w,Rect(5,5,150,30));
