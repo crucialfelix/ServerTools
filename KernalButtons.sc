@@ -28,7 +28,7 @@ MethodLabel : SimpleButton {
 	*prBasicNew { arg  method,desc,layout,minWidth=300;
 		^super.prNew(layout,
 				desc,
-				minWidth,
+				Rect(0,0,minWidth,GUI.skin.buttonHeight),
 				GUI.font.new("Monaco",9))
 			.action_({method.ginsp})
 			.background_(Color.new255(245, 222, 179))
