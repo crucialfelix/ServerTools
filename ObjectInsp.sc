@@ -108,8 +108,8 @@ ObjectInsp : ObjectGui {
 			layout.startRow;
 			model.keysValuesDo({ arg k,v;
 				layout.startRow;
-				SimpleLabel(layout,k.asString);
-				InspButton(v,layout);
+				SimpleLabel(layout,k.asString,200);
+				InspButton(v,layout,300);
 			});
 		});
 		
@@ -129,8 +129,8 @@ ObjectInsp : ObjectGui {
 		this.registerHook(SynthDef,{ arg def,layout;
 			def.allControlNames.do { arg cn,i;
 				ArgName(cn.name,layout.startRow);
-				SimpleLabel(layout,cn.rate);
-				SimpleLabel(layout,cn.defaultValue);
+				SimpleLabel(layout,cn.rate,100);
+				SimpleLabel(layout,cn.defaultValue,300);
 			};
 			layout.startRow;
 			if(\InstrSynthDef.asClass.notNil and: {def.isKindOf(InstrSynthDef)},{
