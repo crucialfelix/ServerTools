@@ -360,7 +360,7 @@ MethodGui : ObjectGui {
 
 	source {
 		var classSource,myIndex,nextMethod,tillChar;
-		classSource = File(model.fileNameSymbol.asString,"r").readAllString;
+		classSource = File(model.filenameSymbol.asString,"r").readAllString;
 		myIndex = model.ownerClass.methods.indexOf(model);
 		nextMethod = model.ownerClass.methods[myIndex+1];
 		if(nextMethod.notNil,{
