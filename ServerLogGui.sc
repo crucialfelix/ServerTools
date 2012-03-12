@@ -7,7 +7,7 @@ ServerLogGui : ObjectGui {
 	var <>showTimes=true;
 
 	writeName {}
-	guiBody { arg layout,events,title;
+	guiBody { arg layout,bounds,events,title;
 		var w;
 		w = layout.bounds.width;
 		nodeColors = Dictionary.new;
