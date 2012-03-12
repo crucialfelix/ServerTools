@@ -15,8 +15,8 @@ SimpleLabel : SCViewHolder {
 		if(font.isNil,{ font =  GUI.font.new(*GUI.skin.fontSpecs) });
 		if(bounds.isNumber,{ // min width
 			b = string.bounds(font);
-			width = min(b.width + 6,bounds);
-			height = min(b.height + 6, GUI.skin.buttonHeight);
+			width = max(b.width + 6,bounds);
+			height = max(b.height + 6, GUI.skin.buttonHeight);
 		},{
 			if(bounds.isKindOf(Rect),{ // width x height
 				width = bounds.width;
@@ -58,8 +58,8 @@ SimpleButton : SimpleLabel {
 
 	var <action;
 
-	*new { arg layout,title,action;
-		^super.prNew(layout,title).action_(action)
+	*new { arg layout,title,action,bounds,font;
+		^super.prNew(layout,title,bounds,font).action_(action)
 	}
 	action_ { arg argAction;
 		action = argAction;
