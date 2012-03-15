@@ -76,6 +76,7 @@ ServerLog : NetAddr {
 	slinit { arg s;
 		server = s;
 		server.addr = this;
+		msgs = Array.new(1024*16);
 		thisProcess.addOSCRecvFunc({ arg msg,time,replyAddr,recvPort;
 			var status;
 			if(msg[0] == '/status.reply') {
@@ -132,7 +133,7 @@ ServerLog : NetAddr {
 			cmd = cmd.asInteger;
 		});
 		^cmd.switch(
-			11 , { "/n_free" },
+			11, { "/n_free" },
 			12, {"/n_run"},
 			14, {"/n_map"},
 			48, {"/n_mapn"},
@@ -148,7 +149,7 @@ ServerLog : NetAddr {
 			23, {"/g_tail"},
 			24, {"/g_freeAll"},
 			50, {"/g_deepFree"},
-			9, {"/s_new"},
+			9,  {"/s_new"},
 			44, {"/s_get"},
 			45, {"/s_getn"},
 			cmd.asString
