@@ -155,17 +155,6 @@ ServerLog : NetAddr {
 			cmd.asString
 		)
 	}
-	
-	*gui { |parent,bounds,tail=1000,server|
-		var sl,events;
-		sl = this.new(server);
-		sl.asyncGui(parent,bounds,tail);
-	}
-	asyncGui { arg parent,bounds,tail=1000;
-		this.getSortedEvents(tail,{ |events|
-			this.gui(parent,bounds,events)
-		});
-	}
 }
 
 
