@@ -92,12 +92,12 @@ ServerLogGui : ObjectGui {
 			// send/receive
 			SimpleLabel(r,dir,30).background_(bg);
 			if(showTimes,{
-				// time
-				SimpleLabel(r,eventTime,100);
 				// sent
 				SimpleLabel(r,timeSent,100);
 				// delta
 				SimpleLabel(r,delta,30);
+				// time
+				SimpleLabel(r,if(delta.notNil,{ev.eventTime},""),100);
 			});
 			// msg
 			if(ev.isBundle,{
