@@ -50,11 +50,13 @@ ServerLogGui : ObjectGui {
 		},Rect(0,0,1200,1300))
 	}
 	updateNav {
-		navMax = model.msgs.size + scrollSize;
-		pixelsPerEvent = nav.bounds.width / navMax;
-		nav.thumbSize = max(scrollSize * pixelsPerEvent, 30);
-		nav.value = currEvent / navMax;
-		nav.refresh;
+		if(nav.notClosed,{
+			navMax = model.msgs.size + scrollSize;
+			pixelsPerEvent = nav.bounds.width / navMax;
+			nav.thumbSize = max(scrollSize * pixelsPerEvent, 30);
+			nav.value = currEvent / navMax;
+			nav.refresh;
+		})
 	}
 	scrollTo { arg eventNum;
 		var event;
