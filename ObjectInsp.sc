@@ -58,9 +58,14 @@ ObjectInsp : ObjectGui {
 		iNames = model.class.instVarNames;
 		if(iNames.notNil,{
 			iNames.do({arg v,i;
-				var iv;
+				var iv,str;
 				iv=model.instVarAt(i);
-				listItems.add( v.asString.as(Array).extend(25,$ ).as(String) ++ "=  " + iv);
+				{
+	    			str = v.asString;
+				}.try({ arg err;
+					str = "ERROR: during asString " + v.class.name;
+	    		});
+				listItems.add( str.as(Array).extend(25,$ ).as(String) ++ "=  " + iv);
 				actions.add({ iv.insp(model,v) });
 			});
 		});
@@ -103,8 +108,8 @@ ObjectInsp : ObjectGui {
 			layout.startRow;
 			model.keysValuesDo({ arg k,v;
 				layout.startRow;
-				SimpleLabel(layout,k.asString,v);
-				InspButton(v,layout);
+				SimpleLabel(layout,k.asString,200);
+				InspButton(v,layout,300);
 			});
 		});
 		
@@ -124,8 +129,8 @@ ObjectInsp : ObjectGui {
 		this.registerHook(SynthDef,{ arg def,layout;
 			def.allControlNames.do { arg cn,i;
 				ArgName(cn.name,layout.startRow);
-				SimpleLabel(layout,cn.rate);
-				SimpleLabel(layout,cn.defaultValue);
+				SimpleLabel(layout,cn.rate,100);
+				SimpleLabel(layout,cn.defaultValue,300);
 			};
 			layout.startRow;
 			if(\InstrSynthDef.asClass.notNil and: {def.isKindOf(InstrSynthDef)},{
@@ -262,12 +267,13 @@ ClassGui : ObjectInsp {
 										method.gui;
 										true
 									 },{
-										false	 
+										false
 									 });
 								});
 						if(found.not,{
 							// needs a gui report in the dialog
-							("Method not found:" + string).inform;						});
+							("Method not found:" + string).inform;
+						});
 					};
 					w = PageLayout("method?",Rect(200,200,170,40),scroll:false);
 					b = 	TextField(w,Rect(5,5,150,30));
@@ -354,7 +360,7 @@ MethodGui : ObjectGui {
 
 	source {
 		var classSource,myIndex,nextMethod,tillChar;
-		classSource = File(model.fileNameSymbol.asString,"r").readAllString;
+		classSource = File(model.filenameSymbol.asString,"r").readAllString;
 		myIndex = model.ownerClass.methods.indexOf(model);
 		nextMethod = model.ownerClass.methods[myIndex+1];
 		if(nextMethod.notNil,{

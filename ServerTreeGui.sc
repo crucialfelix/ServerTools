@@ -129,8 +129,11 @@ BussesTool {
 						})
 					});
 				});
-				SimpleButton(layout,"search ServerLog",{
+				SimpleButton(layout,"log...",{
 					ServerLog.guiMsgsForBus(b.start,b.size)
+				});
+				SimpleButton(layout,"free",{
+					b.free
 				});
 			});
 		},{

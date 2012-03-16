@@ -37,7 +37,12 @@ Insp {
 				});
 				box.startRow;
 				if(guiInstead,{
-					subject.gui(box)
+					try {
+						subject.gui(box)
+					} { arg err;
+						err.asString.gui(box);
+						err.dump;
+					}
 				},{
 					ObjectInsp(subject).gui(box);
 				});

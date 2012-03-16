@@ -3,29 +3,79 @@
 
 ServerLogGui : ObjectGui {
 
-	var nodeColors,error;
+	var nodeColors,error,eventView;
 	var <>showTimes=true;
 
-	writeName {}
-	guiBody { arg layout,events,title;
+	var nav,scrollSize=24,pixelsPerEvent,currEvent=0,navMax=32,scroller;
+	
+	writeName { }
+	guiBody { arg layout,bounds;
 		var w;
-		w = layout.bounds.width;
-		nodeColors = Dictionary.new;
-		error = Color(1.0, 0.0, 0.08955223880597);
-		if(title.notNil,{
-			SimpleLabel(layout,title).bold;
-			layout.startRow
-		});
-		if(events.isNil,{
-			SimpleLabel(layout,"No events in server log")
-		});
-		events.do({ |ev|
-			this.guiEvent(ev,layout);
+		layout.flow({ arg layout;
+			SimpleLabel(layout,model.server).bold;
+			// prev next page buttons
+			SimpleButton(layout,"previous",{
+				this.scrollTo( max(0,currEvent - scrollSize) );
+				this.updateNav;
+			});
+			SimpleButton(layout,"next",{
+				this.scrollTo( currEvent + scrollSize );
+				this.updateNav;
+			});
+			// post tail toggle
+			layout.startRow;
+			bounds = bounds ?? {layout.innerBounds};
+			w = 1000;
+			nodeColors = Dictionary.new;
+			error = Color(1.0, 0.0, 0.08955223880597);
+			nav = Slider(layout,w@20);
+			this.updateNav;
+			nav.action = {
+				currEvent = (nav.value * navMax).round(scrollSize);
+				this.updateNav;
+				this.scrollTo( currEvent )
+			};
+			layout.startRow;
+			eventView = FlowView(layout,layout.indentedRemaining);
+			/*events.do({ |ev|
+				this.guiEvent(ev,layout);
+			});*/
+			this.scrollTo( currEvent = max(model.msgs.size - scrollSize,0).round(scrollSize) );
+			scroller = Routine.run({
+							loop {
+								this.updateNav;
+								10.wait;
+							}
+						},clock:AppClock);
+		},Rect(0,0,1200,1300))
+	}
+	updateNav {
+		if(nav.notClosed,{
+			navMax = model.msgs.size + scrollSize;
+			pixelsPerEvent = nav.bounds.width / navMax;
+			nav.thumbSize = max(scrollSize * pixelsPerEvent, 30);
+			nav.value = currEvent / navMax;
+			nav.refresh;
+		})
+	}
+	scrollTo { arg eventNum;
+		var event;
+		eventView.removeAll;
+		currEvent = eventNum;
+		for(eventNum,eventNum + scrollSize,{ arg ei;
+			event = model.msgs[ei];
+			if(event.notNil,{
+				this.guiEvent(event,eventView)
+			})
 		});
 	}
+	remove {
+		scroller.stop;
+		super.remove
+	}
+
 	guiEvent { arg ev,layout;
-		var eventTime,timeSent,delta,dir,bg,row;
-		eventTime = ev.eventTime;
+		var timeSent,delta,dir,bg,row;
 		if(ev.isKindOf(ServerLogSentEvent),{
 			timeSent = ev.timeSent;
 			delta = ev.delta;
@@ -42,12 +92,12 @@ ServerLogGui : ObjectGui {
 			// send/receive
 			SimpleLabel(r,dir,30).background_(bg);
 			if(showTimes,{
-				// time
-				SimpleLabel(r,eventTime,100);
 				// sent
 				SimpleLabel(r,timeSent,100);
 				// delta
 				SimpleLabel(r,delta,30);
+				// time
+				SimpleLabel(r,if(delta.notNil,{ev.eventTime},""),100);
 			});
 			// msg
 			if(ev.isBundle,{
@@ -128,7 +178,7 @@ ServerLogGui : ObjectGui {
 		*/
 	}
 	colorForCmd { |cmd|
-		^cmd.switch(
+		^cmd.asString.switch(
 			"/n_free",{ Color.red},
 			"/g_freeAll",{Color.red},
 			"/g_deepFree",{Color.red},
@@ -150,7 +200,8 @@ ServerLogGui : ObjectGui {
 			"/n_after",{Color.green},
 			"/g_new",{Color.green},
 			"/g_head",{Color.green},
-			"/g_tail",{Color.green}
+			"/g_tail",{Color.green},
+			Color.white
 		)
 	}
 	addAction { |num|
