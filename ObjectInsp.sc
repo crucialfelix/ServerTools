@@ -117,7 +117,8 @@ ObjectInsp : ObjectGui {
 			var sd;
 			layout.startRow;
 			ServerLog.guiMsgsForSynth(model,layout);
-			if(InstrSynthDef.notNil,{
+			Annotations.guiFindNode(model.nodeID,layout);
+			if(\InstrSynthDef.asClass.notNil,{
 				if(model.defName.notNil,{
 					sd = InstrSynthDef.cacheAt(model.defName,model.server);
 					if(sd.notNil,{
