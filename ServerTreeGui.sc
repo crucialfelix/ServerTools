@@ -110,8 +110,8 @@ BussesTool {
 					listen.stop
 				});
 				SimpleLabel( layout, b.start.asString + "(" ++ b.size.asString ++ ")",100 );
-	
-				Annotations.guiFindBus(b.start,b.size,layout);
+
+				Annotations.guiFindBus(b.start,\audio,layout);
 	
 				if(BusPool.notNil,{
 					bus = BusPool.findBus(server,b.start);
