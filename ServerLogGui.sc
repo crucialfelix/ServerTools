@@ -31,6 +31,11 @@ ServerLogGui : ObjectGui {
 				this.scrollTo( currEvent + scrollSize );
 				this.updateNav;
 			});
+			SimpleButton(layout,"clear",{
+				model.clear;
+				this.scrollTo(0);
+				this.updateNav;
+			});
 			// post tail toggle
 			layout.startRow;
 			bounds = bounds ?? {layout.innerBounds};

@@ -24,7 +24,9 @@ ServerLog : NetAddr {
 	remove {
 		server.addr = NetAddr(hostname,port);
 	}
-
+	clear {
+		msgs = Array.new(1024*16);
+	}
 	*ifActive { arg server,func;
 		var sl;
 		sl = this.forServer(server);
