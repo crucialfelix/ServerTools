@@ -127,6 +127,13 @@ ObjectInsp : ObjectGui {
 				})
 			})
 		});
+		this.registerHook(Bus,{ arg bus,layout;
+			layout.startRow;
+			ActionButton(layout,"log...",{
+				ServerLog.guiMsgsForBus(bus.index,bus.rate,nil,bus.server);
+			});
+			Annotations.guiFindBus(bus.index,bus.rate,layout)
+		});
 		this.registerHook(SynthDef,{ arg def,layout;
 			def.allControlNames.do { arg cn,i;
 				ArgName(cn.name,layout.startRow);
