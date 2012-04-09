@@ -96,9 +96,13 @@ BussesTool {
 		^super.new.server_(server ? Server.default).gui
 	}
 	gui { arg layout,bounds;
-		var resize = false;
-		if(layout.isNil,{ layout = FlowView.new; resize=true });
-		SimpleLabel( layout, "Audio Busses",685);
+		var resize = false,w;
+		if(layout.isNil,{ 
+			w = Window("Busses",bounds ?? {Rect(0,0,1000,1000)},scroll: true).front;
+			layout = FlowView(w); 
+			resize=true 
+		});
+		SimpleLabel( layout, "Audio Busses",layout.bounds.width);
 		if(\Patch.asClass.notNil,{
 			server.audioBusAllocator.blocks.do({ |b|
 				var listen,bus;
@@ -113,7 +117,7 @@ BussesTool {
 
 				Annotations.guiFindBus(b.start,\audio,layout);
 	
-				if(BusPool.notNil,{
+				if(\BusPool.asClass.notNil,{
 					bus = BusPool.findBus(server,b.start);
 					if(bus.notNil,{
 						layout.flow({ |f|
@@ -140,7 +144,6 @@ BussesTool {
 		},{
 			"BussesTool requires cruciallib for now".inform;
 		});
-		if(resize,{ layout.resizeToFit })
 	}
 }
 
