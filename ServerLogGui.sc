@@ -240,10 +240,10 @@ ServerLogGui : ObjectGui {
 			c = Color.rand;
 			nodeColors[defName] = c;
 		});
-		if(InstrSynthDef.notNil,{
+		if(\InstrSynthDef.asClass.notNil,{
 			def = InstrSynthDef.cacheAt(defName,model.server);
 		});
-		if(def.notNil,{
+		if(def.isKindOf(SynthDef),{
 			InspButton(def,r).background_(c).color_(Color.black);
 		},{
 			SimpleLabel(r,defName.asString).background_(c).color_(Color.black)
