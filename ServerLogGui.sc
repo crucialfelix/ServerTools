@@ -4,10 +4,19 @@
 ServerLogGui : ObjectGui {
 
 	var nodeColors,error,eventView;
+	var >messages;
 	var <>showTimes=true;
 
 	var nav,scrollSize=24,pixelsPerEvent,currEvent=0,navMax=32,scroller;
 	
+	*new { arg model,messages;
+		^super.new(model).messages_(messages)
+	}
+	messages {
+		// usually reads messages directly from the ServerLog
+		// unless it was given a fixed search result to display
+		^messages ?? {model.msgs}
+	}
 	writeName { }
 	guiBody { arg layout,bounds;
 		var w;
@@ -40,18 +49,18 @@ ServerLogGui : ObjectGui {
 			/*events.do({ |ev|
 				this.guiEvent(ev,layout);
 			});*/
-			this.scrollTo( currEvent = max(model.msgs.size - scrollSize,0).round(scrollSize) );
+			this.scrollTo( currEvent = max(this.messages.size - scrollSize,0).round(scrollSize) );
 			scroller = Routine.run({
 							loop {
 								this.updateNav;
 								10.wait;
 							}
 						},clock:AppClock);
-		},Rect(0,0,1200,1300))
+		},bounds ?? {Rect(0,0,1200,1300)})
 	}
 	updateNav {
 		if(nav.notClosed,{
-			navMax = model.msgs.size + scrollSize;
+			navMax = this.messages.size + scrollSize;
 			pixelsPerEvent = nav.bounds.width / navMax;
 			nav.thumbSize = max(scrollSize * pixelsPerEvent, 30);
 			nav.value = currEvent / navMax;
@@ -59,11 +68,12 @@ ServerLogGui : ObjectGui {
 		})
 	}
 	scrollTo { arg eventNum;
-		var event;
+		var event,msgs;
+		msgs = this.messages;
 		eventView.removeAll;
 		currEvent = eventNum;
 		for(eventNum,eventNum + scrollSize,{ arg ei;
-			event = model.msgs[ei];
+			event = msgs[ei];
 			if(event.notNil,{
 				this.guiEvent(event,eventView)
 			})
