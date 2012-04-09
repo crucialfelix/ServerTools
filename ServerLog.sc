@@ -67,8 +67,8 @@ ServerLog : NetAddr {
 		var msgs,sl;
 		sl = this.forServer(server)  ?? { "ServerLog not running".inform; ^this };
 		msgs = sl.perform(*performList);
-		if(msgs.notEmpty or: {layout.notNil},{
-			ServerLogGui(sl).showTimes_(showTimes).gui(layout,nil,nil,msgs,title)
+		if(msgs.notEmpty or: {layout.isNil},{
+			ServerLogGui(sl,msgs).showTimes_(showTimes).gui(layout)
 		})
 	}		
 
