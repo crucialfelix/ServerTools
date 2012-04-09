@@ -134,7 +134,7 @@ BussesTool {
 					ServerLog.guiMsgsForBus(b.start,b.size)
 				});
 				SimpleButton(layout,"free",{
-					b.free
+					Bus(\audio,b.start,b.size).free
 				});
 			});
 		},{
