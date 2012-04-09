@@ -68,8 +68,9 @@ ServerTreeGui : ObjectGui { // model is Server
 							});
 							//ToggleButton(l,"pause",{ arg way; node.run(way) },init:true);
 							SimpleButton(l,"free",{ node.free });
-							l.startRow;
-							ServerLog.guiMsgsForSynth(node,l);
+							ActionButton(l,"log...",{
+								ServerLog.guiMsgsForSynth(node);
+							});
 							l.startRow;
 							Annotations.guiFindNode(~id,l);
 							~controls.keysValuesDo { arg k,v;
