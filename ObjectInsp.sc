@@ -166,7 +166,7 @@ ObjectInsp : ObjectGui {
 	*sourceCodeGui { arg sourceCode, layout,width=700;
 		var f,height,tf;
 		f = GUI.font.new("Courier",12.0);
-		height = sourceCode.bounds(f).height + 5;
+		height = sourceCode.split(Char.nl).size * 15 + 20;
 		tf = TextView(layout,Rect(0,0,width,height));
 		tf.string = sourceCode;
 		tf.font_(f);
