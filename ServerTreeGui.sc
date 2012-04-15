@@ -24,7 +24,7 @@ ServerTreeGui : ObjectGui { // model is Server
 
 			if(layout.isNil,{
 				w = Window("Server Node Tree",Rect(0,0,1220,820),scroll:true);
-				f = CompositeView(w,Rect(0,0,1210,810));
+				f = CompositeView(w,Rect(0,0,1210,5000));
 				w.front;
 			},{
 				f = CompositeView(layout,bounds ?? {layout.bounds})
@@ -68,8 +68,9 @@ ServerTreeGui : ObjectGui { // model is Server
 							});
 							//ToggleButton(l,"pause",{ arg way; node.run(way) },init:true);
 							SimpleButton(l,"free",{ node.free });
-							l.startRow;
-							ServerLog.guiMsgsForSynth(node,l);
+							ActionButton(l,"log...",{
+								ServerLog.guiMsgsForSynth(node);
+							});
 							l.startRow;
 							Annotations.guiFindNode(~id,l);
 							~controls.keysValuesDo { arg k,v;
@@ -95,9 +96,13 @@ BussesTool {
 		^super.new.server_(server ? Server.default).gui
 	}
 	gui { arg layout,bounds;
-		var resize = false;
-		if(layout.isNil,{ layout = FlowView.new; resize=true });
-		SimpleLabel( layout, "Audio Busses",685);
+		var resize = false,w;
+		if(layout.isNil,{ 
+			w = Window("Busses",bounds ?? {Rect(0,0,1000,1000)},scroll: true).front;
+			layout = FlowView(w); 
+			resize=true 
+		});
+		SimpleLabel( layout, "Audio Busses",layout.bounds.width);
 		if(\Patch.asClass.notNil,{
 			server.audioBusAllocator.blocks.do({ |b|
 				var listen,bus;
@@ -109,10 +114,10 @@ BussesTool {
 					listen.stop
 				});
 				SimpleLabel( layout, b.start.asString + "(" ++ b.size.asString ++ ")",100 );
+
+				Annotations.guiFindBus(b.start,\audio,layout);
 	
-				Annotations.guiFindBus(b.start,b.size,layout);
-	
-				if(BusPool.notNil,{
+				if(\BusPool.asClass.notNil,{
 					bus = BusPool.findBus(server,b.start);
 					if(bus.notNil,{
 						layout.flow({ |f|
@@ -133,13 +138,12 @@ BussesTool {
 					ServerLog.guiMsgsForBus(b.start,b.size)
 				});
 				SimpleButton(layout,"free",{
-					b.free
+					Bus(\audio,b.start,b.size).free
 				});
 			});
 		},{
 			"BussesTool requires cruciallib for now".inform;
 		});
-		if(resize,{ layout.resizeToFit })
 	}
 }
 

@@ -117,7 +117,8 @@ ObjectInsp : ObjectGui {
 			var sd;
 			layout.startRow;
 			ServerLog.guiMsgsForSynth(model,layout);
-			if(InstrSynthDef.notNil,{
+			Annotations.guiFindNode(model.nodeID,layout);
+			if(\InstrSynthDef.asClass.notNil,{
 				if(model.defName.notNil,{
 					sd = InstrSynthDef.cacheAt(model.defName,model.server);
 					if(sd.notNil,{
@@ -125,6 +126,13 @@ ObjectInsp : ObjectGui {
 					})
 				})
 			})
+		});
+		this.registerHook(Bus,{ arg bus,layout;
+			layout.startRow;
+			ActionButton(layout,"log...",{
+				ServerLog.guiMsgsForBus(bus.index,bus.rate,nil,bus.server);
+			});
+			Annotations.guiFindBus(bus.index,bus.rate,layout)
 		});
 		this.registerHook(SynthDef,{ arg def,layout;
 			def.allControlNames.do { arg cn,i;
@@ -158,7 +166,7 @@ ObjectInsp : ObjectGui {
 	*sourceCodeGui { arg sourceCode, layout,width=700;
 		var f,height,tf;
 		f = GUI.font.new("Courier",12.0);
-		height = sourceCode.bounds(f).height + 5;
+		height = sourceCode.split(Char.nl).size * 15 + 20;
 		tf = TextView(layout,Rect(0,0,width,height));
 		tf.string = sourceCode;
 		tf.font_(f);
