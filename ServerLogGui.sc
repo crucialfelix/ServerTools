@@ -139,7 +139,7 @@ ServerLogGui : ObjectGui {
 	*guiMixedBundle { |mb|
 		var slg;
 		slg = ServerLogGui.new(\fakeModel);
-		
+		// todo: remove dep
 		PageLayout.new.flow({ arg r;
 			[mb.preparationMessages,mb.messages].do({ |msgs|
 				if(msgs.size == 1,{
