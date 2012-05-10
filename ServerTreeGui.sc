@@ -24,7 +24,7 @@ ServerTreeGui : ObjectGui { // model is Server
 
 			if(layout.isNil,{
 				w = Window("Server Node Tree",Rect(0,0,1220,820),scroll:true);
-				f = CompositeView(w,Rect(0,0,1210,5000));
+				f = CompositeView(w,Rect(0,0,1210,10000));
 				w.front;
 			},{
 				f = CompositeView(layout,bounds ?? {layout.bounds})
