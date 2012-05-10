@@ -61,6 +61,8 @@ InspButton : SimpleButton {
 	}
 }
 
+// bw compat
+InspectorLink : InspButton {}
 
 DefNameLabel {
 
