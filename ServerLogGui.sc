@@ -36,7 +36,10 @@ ServerLogGui : ObjectGui {
 				this.scrollTo(0);
 				this.updateNav;
 			});
-			// post tail toggle
+			SimpleButton(layout,"tail",{
+				model.tail = model.tail.not
+			});
+			
 			layout.startRow;
 			bounds = bounds ?? {layout.innerBounds};
 			w = 1000;
