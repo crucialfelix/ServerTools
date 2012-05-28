@@ -64,6 +64,18 @@
 		
 		})
 	}
+	queryNode { arg nodeID,callback;
+		this.getQueryTree({ arg tree; this.prSearchForNode(nodeID,callback,tree); });
+	}
+	prSearchForNode { arg nodeID,callback,tree;
+		if(tree['id'] == nodeID,{
+			^callback.value(tree)
+		});
+		tree['children'].do { arg leaf;
+		this.prSearchForNode(nodeID,callback,leaf) !? {^nil};
+		};
+		^nil
+	}	
 }
 
 
