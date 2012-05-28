@@ -78,16 +78,20 @@
 			does not overwrite existing
 			protip: finish writing your classes first
 		*/
-		var q;
+		var q,dir;
 		q = Quark.find(quarkName.asString);
+		dir = q.packageRoot +/+ "HelpSource" +/+ "Classes";
+		if(File.exists(dir).not,{
+			File.mkdir(dir)
+		});
 		q.definesClasses.do { arg klass;
 			var path;
-			path = q.packageRoot +/+ "HelpSource" +/+ "Classes" +/+ (klass.name.asString ++ ".schelp");
+			path = dir +/+ (klass.name.asString ++ ".schelp");
 			if(File.exists(path).not,{
+				("Creating " + path).inform;
 				SCDoc.makeClassTemplate(klass.name).write(path);
-				path.debug("created")
 			},{
-				path.debug("exists")
+				(path + "already exists").inform
 			});
 		};
 	}
