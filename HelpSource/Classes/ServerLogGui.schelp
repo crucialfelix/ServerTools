@@ -1,6 +1,6 @@
 CLASS:: ServerLogGui
 summary:: the interface for display and searching the ServerLog
-categories:: Debugging, External Control>OSC 
+categories:: Debugging, External Control>OSC
 related:: Classes/ServerLog
 
 DESCRIPTION::
@@ -28,29 +28,26 @@ returns:: (returnvalue)
 
 INSTANCEMETHODS::
 
+
 METHOD:: showTimes
 
-
 returns:: (returnvalue)
+
 
 METHOD:: writeName
 
-
 returns:: (returnvalue)
 
-METHOD:: guiBody
 
+METHOD:: guiBody
 
 argument:: layout
 the parent view, FlowView or window
 
-argument:: events
+argument:: bounds
 
 
-argument:: title
 
-
-returns:: (returnvalue)
 
 METHOD:: guiEvent
 
@@ -63,11 +60,10 @@ the parent view, FlowView or window
 
 returns:: (returnvalue)
 
+
 METHOD:: formatMsg
 
-
 argument:: r
-
 
 argument:: msg
 
