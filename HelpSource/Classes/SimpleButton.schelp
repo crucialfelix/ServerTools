@@ -17,9 +17,14 @@ the parent view, FlowView or window
 
 argument:: title
 
-
 argument:: action
 a function to execute when the button is pressed
+
+argument:: bounds
+nil = autosizes, number = minWidth, Rect = bounds, Point = width @ height
+
+argument:: font
+
 
 returns:: this
 

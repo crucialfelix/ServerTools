@@ -1,6 +1,6 @@
 CLASS:: ServerLog
 summary:: records OSC traffic to and from a Server and displays this in a browseable searchable interface
-categories:: Debugging, External Control>OSC 
+categories:: Debugging, External Control>OSC
 related:: Classes/Server, Classes/ServerLogGui
 
 DESCRIPTION::
@@ -10,7 +10,7 @@ Numerical commands ( 9 = /s_new ) are converted to human readable equivalents.
 Nodes and defNames are displayed with consistent color coding to increase visual clarity.
 Integrated with inspect so that defNames can be clicked on in the log display and the SynthDef itself can be quickly examined.
 Integrated with ServerTreeGui so the current state of the tree can be cross checked with the log.
-Cross check of Synth and SynthDef is performed so it flags probably errors like misnamed arguments. 
+Cross check of Synth and SynthDef is performed so it flags probably errors like misnamed arguments.
 
 TODO: add refresh, scrolling, search
 
@@ -44,22 +44,6 @@ argument:: server
 returns:: a ServerLog
 
 
-METHOD:: gui
-Opens the ServerLog interface.
-
-argument:: parent
-parent view, window or nil
-
-argument:: bounds
-bounds or nil
-
-argument:: tail
-If the ServerLog has been running for a while then there will be a lot of data. tail specifies to show the most recent N events.  This will be removed when scrolling and refresh are added.
-
-argument:: server
-
-returns:: ServerLog class
-
 
 METHOD:: new
 identical to ServerLog.start
@@ -80,21 +64,14 @@ returns:: a ServerLog
 
 
 
-
-
-
-
-
 METHOD:: ifActive
 
-
 argument:: server
-
 
 argument:: func
 
 
-returns:: (returnvalue)
+
 
 METHOD:: guiMsgsForSynth
 A type of search function: shows all OSC messages that referenced a Synth, creating a small ServerLogGui inteface to display them.  Used in many debugging views.  This matches both sent and received messages (like node end).
@@ -180,23 +157,22 @@ INSTANCEMETHODS::
 
 METHOD:: msgs
 
+returns:: array of ServerLogSentEvent/ServerLogReceivedEvent
 
-returns:: (returnvalue)
 
 METHOD:: tail
+print all OSC messages to console as they are sent to server.  like unix tail
 
-
-returns:: (returnvalue)
 
 METHOD:: server
 
+returns:: a Server
 
-returns:: (returnvalue)
 
 METHOD:: remove
 
-
 returns:: (returnvalue)
+
 
 METHOD:: filterBySynthDef
 
@@ -276,23 +252,4 @@ argument:: callback
 
 returns:: (returnvalue)
 
-METHOD:: asyncGui
 
-
-argument:: parent
-
-
-argument:: bounds
-
-
-argument:: tail
-
-
-returns:: (returnvalue)
-
-
-EXAMPLES::
-
-code::
-
-::
