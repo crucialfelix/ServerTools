@@ -131,7 +131,7 @@ ObjectInsp : ObjectGui {
 		});
 		this.registerHook(Bus,{ arg bus,layout;
 			layout.startRow;
-			ActionButton(layout,"log...",{
+			SimpleButton(layout,"log...",{
 				ServerLog.guiMsgsForBus(bus.index,bus.rate,nil,bus.server);
 			});
 			if(\Annotations.asClass.notNil,{
