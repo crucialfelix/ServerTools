@@ -3,7 +3,7 @@
 ObjectInsp : ObjectGui {
 
 	classvar displayHooks;
-	
+
 	writeName { arg layout;
 		ClassNameLabel.newBig(model.class,layout);
 		GUI.dragSource.new(layout,Rect(0,0,500,30))
@@ -17,9 +17,9 @@ ObjectInsp : ObjectGui {
 		var vert,list,listItems,actions,val;
 		listItems = List.new;
 		actions = List.new;
-		
+
 		displayHooks.at(model.class).value(model,layout);
-	
+
 		layout.startRow;
 		this.instVarsGui(listItems,actions);
 
@@ -93,7 +93,7 @@ ObjectInsp : ObjectGui {
 			model.class.openCodeFile;
 		});
 	}
-	
+
 	*initClass {
 		displayHooks = IdentityDictionary.new;
 
@@ -112,7 +112,7 @@ ObjectInsp : ObjectGui {
 				InspButton(v,layout,300);
 			});
 		});
-		
+
 		this.registerHook(Synth,{ arg model,layout;
 			var sd;
 			layout.startRow;
@@ -172,7 +172,7 @@ ObjectInsp : ObjectGui {
 			displayHooks[class] = displayFunction;// arg object, layout
 		})
 	}
-	
+
 	*sourceCodeGui { arg sourceCode, layout,width=700;
 		var f,height,tf;
 		f = GUI.font.new("Courier",12.0);
@@ -182,7 +182,7 @@ ObjectInsp : ObjectGui {
 		tf.font_(f);
 		tf.syntaxColorize;
 		^tf
-	}		
+	}
 }
 
 
@@ -211,7 +211,7 @@ ClassGui : ObjectInsp {
 					var path;
 					model.openHelpFile;
 				});
-				
+
 				if(model.superclass.notNil,{
 					SimpleLabel(layout.startRow,"superclasses:",layoutWidth).bold;
 					supers = model.superclasses;
@@ -220,7 +220,7 @@ ClassGui : ObjectInsp {
 						ClassNameLabel(sup,layout,width,30);
 					})
 				});
-		
+
 				// explicit references
 				/*
 				SimpleLabel(layout.startRow,"classes explicitly referenced in source:");
@@ -229,7 +229,7 @@ ClassGui : ObjectInsp {
 					ClassNameLabel(c.asClass,layout,200);
 				});
 				*/
-		
+
 				// classVarnames
 				if(model.classVarNames.size > 0,{
 					SimpleLabel(layout.startRow,"classvars:",layoutWidth).bold;
@@ -241,7 +241,7 @@ ClassGui : ObjectInsp {
 						InspButton(iv,layout);
 					});
 				});
-		
+
 				//instance vars
 				if(model.instVarNames.size > 0,{
 					SimpleLabel(layout.startRow,"vars:",layoutWidth).bold;
@@ -260,7 +260,7 @@ ClassGui : ObjectInsp {
 						MethodLabel.classMethod(model.class.methods.at(cmi),layout.startRow,minWidth:width);
 					});
 				});
-		
+
 				// cprototype
 				// filenameSymbol
 				// MethodBrowser(class)

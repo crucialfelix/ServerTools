@@ -14,7 +14,7 @@ ServerLog : NetAddr {
 		server = server ? Server.default;
 		if(server.addr.isKindOf(ServerLog),{ ^server.addr });
 		^nil
-	}		
+	}
 	*start { |server|
 		^this.new(server)
 	}
@@ -35,7 +35,7 @@ ServerLog : NetAddr {
 		})
 	}
 
-	
+
 	filterBySynthDef { arg defName;
 		^this.matchMsgs({ arg m; m.matchSynthDef(defName) })
 	}
@@ -55,7 +55,7 @@ ServerLog : NetAddr {
 		};
 		^matches
 	}
-				
+
 	*guiMsgsForSynth { arg synth,layout,showTimes=false;
 		this.prGuiMsgsFor([\filterBySynth,synth.nodeID],synth.server,layout,showTimes,"where synth="+synth.nodeID.asString)
 	}
@@ -72,9 +72,9 @@ ServerLog : NetAddr {
 		if(msgs.notEmpty or: {layout.isNil},{
 			ServerLogGui(sl,msgs).showTimes_(showTimes).gui(layout)
 		})
-	}		
+	}
 
-		
+
 	slinit { arg s;
 		server = s;
 		server.addr = this;
@@ -191,7 +191,7 @@ ServerLogSentEvent {
 
 	var <>delta,<>msg,<>isBundle,<>timeSent;
 	var unbundled;
-	
+
 	*new { arg delta,msg,isBundle;
 		^super.newCopyArgs(delta,msg,isBundle,Main.elapsedTime)
 	}
@@ -206,7 +206,7 @@ ServerLogSentEvent {
 		(">>> % (% + %) % %".format(this.eventTime,timeSent,delta,this.cmdString,msg.copyToEnd(1))).postln
 	}
 	cmdString { ^ServerLog.cmdString(msg[0]) }
-	
+
 	unbundled {
 		^unbundled ?? { unbundled = msg.collect(ServerLogSentEvent(delta,_,false,timeSent)) }
 	}
@@ -220,7 +220,7 @@ ServerLogSentEvent {
 	// for non bundles only
 	matchSynthDef { arg defName;
 		var cmd;
-		^(msg[1] == defName) and: {  
+		^(msg[1] == defName) and: {
 			cmd = ServerLog.cmdString(msg[0]);
 			cmd == "/s_new" /* or: { cmd == "/d_recv" } */
 			// have to decode the bytes
@@ -239,10 +239,10 @@ ServerLogSentEvent {
 			})
 		});
 		// set messages
-		
+
 		^false
 	}
-		
+
 }
 
 

@@ -1,7 +1,7 @@
 
 
 ServerTreeGui : ObjectGui { // model is Server
-	
+
 	*makeWindow { arg server;
 		var gui;
 		server = server ? Server.default;
@@ -11,12 +11,12 @@ ServerTreeGui : ObjectGui { // model is Server
 		})
 	}
 	gui { arg layout,bounds,root;
-		
+
 		var server;
 		server = model;
 
 		server.getQueryTree({ arg root;
-			
+
 			var renderChild,indent = 0,w,f;
 			var nodeWatcher,y=0,renderBox, layout;
 
@@ -37,14 +37,14 @@ ServerTreeGui : ObjectGui { // model is Server
 				box.background = Color.yellow(alpha:0.1);
 				y = y + box.bounds.height + 4;
 			};
-			
+
 			renderChild = { arg data;
 				data.use({
 					var node;
-			
+
 					if(~nodeType == Group,{
 						node = nodeWatcher.nodes.at(~id) ?? {Group.basicNew(server,~id)};
-	
+
 						renderBox.value({ arg l;
 							SimpleLabel(l,("Group(" ++ ~id ++ ")")).background_(ServerLogGui.colorForNodeID(~id) ).bold;
 							//ToggleButton(l,"pause",{ arg way; node.run(way) },init:true);
@@ -53,13 +53,13 @@ ServerTreeGui : ObjectGui { // model is Server
 								Annotations.guiFindNode(~id, l);
 							});
 						});
-						
+
 						indent = indent + 8;
 						~children.do { arg child;
 							renderChild.value(child);
 						};
 						indent = indent - 8;
-						
+
 					},{
 						node = nodeWatcher.nodes.at(~id) ?? {Synth.basicNew(~defName,server,~id)};
 						renderBox.value({ arg l;
@@ -101,10 +101,10 @@ BussesTool {
 	}
 	gui { arg layout,bounds;
 		var resize = false,w;
-		if(layout.isNil,{ 
+		if(layout.isNil,{
 			w = Window("Busses",bounds ?? {Rect(0,0,1000,1000)},scroll: true).front;
-			layout = FlowView(w); 
-			resize=true 
+			layout = FlowView(w);
+			resize=true
 		});
 		SimpleLabel( layout, "Audio Busses",layout.bounds.width);
 		if(\Patch.asClass.notNil,{
@@ -129,7 +129,7 @@ BussesTool {
 						layout.flow({ |f|
 							var ann;
 							ann = BusPool.getAnnotations(bus);
-	
+
 							if(ann.notNil,{
 								ann.keysValuesDo({ |client,name|
 									f.startRow;

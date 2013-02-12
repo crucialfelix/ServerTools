@@ -8,7 +8,7 @@ ServerLogGui : ObjectGui {
 	var <>showTimes=true;
 
 	var nav,scrollSize=24,pixelsPerEvent,currEvent=0,navMax=32,scroller;
-	
+
 	*new { arg model,messages;
 		^super.new(model).messages_(messages)
 	}
@@ -144,7 +144,7 @@ ServerLogGui : ObjectGui {
 				this.formatMsg(r,ev.msg);
 			});
 		});
-	}		
+	}
 	*guiMixedBundle { |mb|
 		var slg;
 		slg = ServerLogGui.new(\fakeModel);
@@ -295,7 +295,7 @@ ServerLogGui : ObjectGui {
 			var anl,argName,err=false;
 			if(key.isInteger,{
 				argName = names[key];
-				if(argName.notNil,{ 
+				if(argName.notNil,{
 					key = key.asString + "(" ++ argName ++ ")";
 					seen.remove(key.asSymbol);
 				},{
@@ -307,7 +307,7 @@ ServerLogGui : ObjectGui {
 				if(err,{
 					key = key.asString + "(!!!!arg name not found in SynthDef!!!!)";
 				},{
-					seen.remove(key.asSymbol);	
+					seen.remove(key.asSymbol);
 				})
 			});
 			anl = ArgName(key,r,5);
@@ -325,7 +325,7 @@ ServerLogGui : ObjectGui {
 				// TODO find default value from cnames
 			};
 		});
-	}				
+	}
 	cmd_nfree { |msg,r|
 		this.coloredCmd(msg[0],Color.yellow(alpha:0.5),r);
 		this.coloredNode(msg[1],r);
@@ -364,8 +364,8 @@ ServerLogGui : ObjectGui {
 		this.coloredCmd(msg[0],Color.yellow(alpha:0.5),r); // n_set
 		this.coloredNode(msg[1],r);
 		this.guiArgs( msg.copyToEnd(2), r);
-	}			
-		
+	}
+
 	cmd_drecv { |msg,r|
 		var defName;
 		this.coloredCmd(msg[0],Color.green(alpha:0.5),r);
