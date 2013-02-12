@@ -150,11 +150,12 @@ ObjectInsp : ObjectGui {
 			SimpleButton(layout,"graph...",{
 				SynthDefGraph(def)
 			},100);
+
 			if(\InstrSynthDef.asClass.notNil and: {def.isKindOf(InstrSynthDef)},{
-				InspButton(def.instrName.asInstr ? def.instrName,layout);
+				InspButton(def.instrName.asInstr ? def.instrName,layout.startRow);
 			});
 			if(def.name.notNil,{
-				SimpleButton(layout,nil,"search ServerLog...",{
+				SimpleButton(layout.startRow,"search ServerLog...",{
 					ServerLog.guiMsgsForSynthDef(def.name);
 				})
 			})
