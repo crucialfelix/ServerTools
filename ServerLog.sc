@@ -98,6 +98,12 @@ ServerLog : NetAddr {
 			if(tail,{
 			    args.postln;
 			});
+			args.do { arg a,i;
+				if(a.isNumber and: {a.isNaN},{
+					("NaN!!!!" + a).error;
+					args.put(i,0)
+				})
+			}
 		});
 		^super.sendMsg(*args);
 	}
