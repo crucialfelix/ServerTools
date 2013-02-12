@@ -37,7 +37,11 @@ ServerLogGui : ObjectGui {
 				this.updateNav;
 			});
 			SimpleButton(layout,"tail",{
-				model.tail = model.tail.not
+				model.tail = model.tail.not;
+			});
+			SimpleButton(layout,"save OSC to file",{
+				model.writeScore
+			});
 			SimpleButton(layout,"post pid",{
 				model.pid.postln
 			});

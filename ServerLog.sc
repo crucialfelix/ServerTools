@@ -130,6 +130,27 @@ ServerLog : NetAddr {
 			})
 		}).play(AppClock)
 	}
+	writeScore { arg path,callback,write;
+		// Score.playFromPath(path)
+		path = path ?? {
+			Document.standardizePath(Date.getDate.asSortableString ++ ".score")
+		};
+		callback = callback ? {("OSC score written"+path).inform};
+		this.getSortedEvents(nil,{ arg events;
+			var startTime,x = Array(events.size);
+			events.do { arg e;
+				if(e.class === ServerLogSentEvent,{
+					if(startTime.isNil,{ startTime = e.eventTime });
+					x.add( [e.eventTime - startTime,e.msg] )
+				})
+			};
+			x.add( [x.last[0] + 5.0, [\c_set, 0, 0]] );
+			Score(x).saveToFile(path);
+			//,path,SystemClock);
+			callback.value(path);
+		})
+	}
+
 	*cmdString { |cmd|
 		if(cmd.asInteger != 0,{
 			cmd = cmd.asInteger;
