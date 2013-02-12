@@ -117,7 +117,9 @@ ObjectInsp : ObjectGui {
 			var sd;
 			layout.startRow;
 			ServerLog.guiMsgsForSynth(model,layout);
-			Annotations.guiFindNode(model.nodeID,layout);
+			if(\Annotations.asClass.notNil,{
+				Annotations.guiFindNode(model.nodeID,layout);
+			});
 			if(\InstrSynthDef.asClass.notNil,{
 				if(model.defName.notNil,{
 					sd = InstrSynthDef.cacheAt(model.defName,model.server);
@@ -132,7 +134,9 @@ ObjectInsp : ObjectGui {
 			ActionButton(layout,"log...",{
 				ServerLog.guiMsgsForBus(bus.index,bus.rate,nil,bus.server);
 			});
-			Annotations.guiFindBus(bus.index,bus.rate,layout)
+			if(\Annotations.asClass.notNil,{
+				Annotations.guiFindBus(bus.index,bus.rate,layout);
+			});
 		});
 		this.registerHook(SynthDef,{ arg def,layout;
 			def.allControlNames.do { arg cn,i;

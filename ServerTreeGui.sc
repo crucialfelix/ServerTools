@@ -49,7 +49,9 @@ ServerTreeGui : ObjectGui { // model is Server
 							SimpleLabel(l,("Group(" ++ ~id ++ ")")).background_(ServerLogGui.colorForNodeID(~id) ).bold;
 							//ToggleButton(l,"pause",{ arg way; node.run(way) },init:true);
 							SimpleButton(l,"free",{ node.free });
-							Annotations.guiFindNode(~id,l);
+							if(\Annotations.asClass.notNil, {
+								Annotations.guiFindNode(~id, l);
+							});
 						});
 						
 						indent = indent + 8;
@@ -72,7 +74,9 @@ ServerTreeGui : ObjectGui { // model is Server
 								ServerLog.guiMsgsForSynth(node);
 							});
 							l.startRow;
-							Annotations.guiFindNode(~id,l);
+							if(\Annotations.asClass.notNil, {
+								Annotations.guiFindNode(~id, l);
+							});
 							~controls.keysValuesDo { arg k,v;
 								l.startRow;
 								ArgName(k,l,100);
@@ -115,8 +119,10 @@ BussesTool {
 				});
 				SimpleLabel( layout, b.start.asString + "(" ++ b.size.asString ++ ")",100 );
 
-				Annotations.guiFindBus(b.start,\audio,layout);
-	
+				if(\Annotations.asClass.notNil, {
+					Annotations.guiFindBus(b.start,\audio,layout);
+				});
+
 				if(\BusPool.asClass.notNil,{
 					bus = BusPool.findBus(server,b.start);
 					if(bus.notNil,{
