@@ -145,6 +145,11 @@ ObjectInsp : ObjectGui {
 				SimpleLabel(layout,cn.defaultValue,300);
 			};
 			layout.startRow;
+			ArgName("Num UGens",layout);
+			SimpleLabel(layout,def.children.size.asString,100);
+			SimpleButton(layout,"graph...",{
+				SynthDefGraph(def)
+			},100);
 			if(\InstrSynthDef.asClass.notNil and: {def.isKindOf(InstrSynthDef)},{
 				InspButton(def.instrName.asInstr ? def.instrName,layout);
 			});
