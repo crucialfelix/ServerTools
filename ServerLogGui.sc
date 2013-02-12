@@ -38,8 +38,10 @@ ServerLogGui : ObjectGui {
 			});
 			SimpleButton(layout,"tail",{
 				model.tail = model.tail.not
+			SimpleButton(layout,"post pid",{
+				model.pid.postln
 			});
-			
+
 			layout.startRow;
 			bounds = bounds ?? {layout.innerBounds};
 			w = 1000;
